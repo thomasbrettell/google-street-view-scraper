@@ -1,0 +1,33 @@
+.grid {
+  display: grid;
+}
+
+.grid-item {
+  position: relative;
+  border: 0.5px solid black;
+  background-color: rgb(229 229 229);
+  user-select: none;
+
+  &:after {
+    content: '';
+    display: block;
+    padding-bottom: 100%;
+  }
+
+  .coords {
+    font-size: 12px;
+    position: absolute;
+    top: 0.25em;
+    left: 0.25em;
+    z-index: 1;
+    color: black;
+  }
+
+  .image {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+}
