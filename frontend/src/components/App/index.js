@@ -6,6 +6,7 @@ import { zoomDimensions, defaultZoomLevel, tileSize } from '../../constants';
 import ImageCanvas from '../ImageCanvas';
 import Divider from '../Divider';
 import SavingOverlay from '../SavingOverlay';
+import PanoViewer from '../PanoViewer';
 
 const { cols, rows } = zoomDimensions[defaultZoomLevel];
 const coords = getCoords(cols, rows);
@@ -20,9 +21,11 @@ console.log(`Image size will be: ${cols * tileSize}x${rows * tileSize}`);
 function App() {
   const sketchRef = useRef(null);
   const [saving, setSaving] = useState(false);
+  const [savingError, setError] = useState(false);
 
   const saveHandler = () => {
     setSaving(true);
+    setError(false);
     new Promise((resolve, reject) => {
       sketchRef.current.sketch.save(resolve, reject);
     })
@@ -30,6 +33,7 @@ function App() {
         console.log('Server successfully rendered the image!');
       })
       .catch(() => {
+        setError('Server failed to render the image');
         console.error('Server failed to render the image');
       })
       .finally(() => {
@@ -75,6 +79,10 @@ function App() {
       <button onClick={saveHandler} disabled={saving}>
         Save
       </button>
+      {savingError && <p className={styles.error}>{savingError}</p>}
+      <Divider />
+      <h2>Panorama Output</h2>
+      <PanoViewer />
       <Divider />
       <h2>Useful links/documentation</h2>
       <ul>
