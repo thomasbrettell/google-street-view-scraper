@@ -13,7 +13,7 @@ const sendImageBufferToServer = async (data) => {
   });
 };
 
-const ImageCanvas = forwardRef(({ tiles, rows, cols, onSave }, ref) => {
+const ImageCanvas = forwardRef(({ tiles, rows, cols, setSketchImage }, ref) => {
   const preload = (p5) => {
     p5.tiles = tiles.map((tile) => {
       tile.img = p5.loadImage(tile.url);
@@ -70,6 +70,8 @@ const ImageCanvas = forwardRef(({ tiles, rows, cols, onSave }, ref) => {
       );
     });
     p5.noLoop();
+    //DONT REMOVE THE ^noLoop^ WITHOUT REMOVING THE vSTATE SETTERv BELOW
+    setSketchImage(p5.canvas.canvas.toDataURL('image/jpeg'));
   };
 
   const windowResized = (p5) => {

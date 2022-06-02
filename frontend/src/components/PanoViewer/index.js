@@ -9,7 +9,6 @@ import {
 } from 'react-three-fiber';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import React, { Suspense, useRef, useState } from 'react';
-import t from './tiny.jpg';
 import styles from './styles.module.scss';
 
 extend({ OrbitControls });
@@ -28,8 +27,8 @@ function Controls(props) {
   );
 }
 
-function Dome() {
-  const texture = useLoader(THREE.TextureLoader, t);
+function Dome({ texture }) {
+  const t = useLoader(THREE.TextureLoader, texture);
 
   //mesh or texture is flipped for some reason, flipping back
   const scale = new THREE.Vector3(1, 1, 1);
@@ -37,16 +36,13 @@ function Dome() {
   return (
     <mesh scale={scale}>
       <sphereBufferGeometry attach='geometry' args={[500, 60, 40]} />
-      <meshBasicMaterial
-        attach='material'
-        map={texture}
-        side={THREE.BackSide}
-      />
+      <meshBasicMaterial attach='material' map={t} side={THREE.BackSide} />
     </mesh>
   );
 }
 
-const PanoViewer = () => {
+const PanoViewer = ({ projection }) => {
+  console.log(projection);
   const [interactedWithCanvas, setInteractedWithCanvas] = useState(false);
   return (
     <div
@@ -67,7 +63,7 @@ const PanoViewer = () => {
           rotateSpeed={-0.2}
         />
         <Suspense fallback={null}>
-          <Dome />
+          <Dome texture={projection} />
         </Suspense>
       </Canvas>
     </div>

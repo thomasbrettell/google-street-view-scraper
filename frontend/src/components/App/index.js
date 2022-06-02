@@ -22,6 +22,7 @@ function App() {
   const sketchRef = useRef(null);
   const [saving, setSaving] = useState(false);
   const [savingError, setError] = useState(false);
+  const [sketchImage, setSketchImage] = useState(null);
 
   const saveHandler = () => {
     setSaving(true);
@@ -71,8 +72,8 @@ function App() {
           tiles={tiles}
           rows={rows}
           cols={cols}
-          onSave={saveHandler}
           ref={sketchRef}
+          setSketchImage={setSketchImage}
         />
         {saving && <SavingOverlay />}
       </div>
@@ -82,7 +83,11 @@ function App() {
       {savingError && <p className={styles.error}>{savingError}</p>}
       <Divider />
       <h2>Panorama Output</h2>
-      <PanoViewer />
+      <p style={{ fontSize: '12px' }}>
+        Note: The image being used here may be smaller the the actual saved
+        image. Hense why it may be a bit low quality.
+      </p>
+      {sketchImage && <PanoViewer projection={sketchImage} />}
       <Divider />
       <h2>Useful links/documentation</h2>
       <ul>
