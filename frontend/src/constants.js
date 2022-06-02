@@ -25,6 +25,4 @@ export const defaultZoomLevel = 3;
 
 export const tileSize = 512;
 
-export const TINIFY_API_KEY = 'PdqqhF2DgKXxdQLQq3zSXsCg1tLS70sf';
-
 export const serverUrl = 'http://localhost:3001/';
