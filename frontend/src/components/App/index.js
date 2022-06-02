@@ -1,8 +1,11 @@
+import { useRef, useState } from 'react';
 import styles from './App.module.scss';
 import { getCoords } from '../../utils';
 import { getTile } from '../../utils';
 import { zoomDimensions, defaultZoomLevel, tileSize } from '../../constants';
 import ImageCanvas from '../ImageCanvas';
+import Divider from '../Divider';
+import SavingOverlay from '../SavingOverlay';
 
 const { cols, rows } = zoomDimensions[defaultZoomLevel];
 const coords = getCoords(cols, rows);
@@ -15,8 +18,28 @@ const tiles = coords.map((coord) => {
 console.log(`Image size will be: ${cols * tileSize}x${rows * tileSize}`);
 
 function App() {
+  const sketchRef = useRef(null);
+  const [saving, setSaving] = useState(false);
+
+  const saveHandler = () => {
+    setSaving(true);
+    new Promise((resolve, reject) => {
+      sketchRef.current.sketch.save(resolve, reject);
+    })
+      .then(() => {
+        console.log('Server successfully rendered the image!');
+      })
+      .catch(() => {
+        console.error('Server failed to render the image');
+      })
+      .finally(() => {
+        setSaving(false);
+      });
+  };
+
   return (
     <>
+      <h2>Tile Images</h2>
       <div
         className={styles.grid}
         style={{
@@ -37,7 +60,43 @@ function App() {
           </div>
         ))}
       </div>
-      <ImageCanvas tiles={tiles} rows={rows} cols={cols} />
+      <Divider />
+      <h2>Stitched Image</h2>
+      <div className={styles['image-canvas-wrapper']}>
+        <ImageCanvas
+          tiles={tiles}
+          rows={rows}
+          cols={cols}
+          onSave={saveHandler}
+          ref={sketchRef}
+        />
+        {saving && <SavingOverlay />}
+      </div>
+      <button onClick={saveHandler} disabled={saving}>
+        Save
+      </button>
+      <Divider />
+      <h2>Useful links/documentation</h2>
+      <ul>
+        <li>
+          <a
+            target='_blank'
+            rel='noreferrer'
+            href='https://developers.google.com/maps/documentation/javascript/streetview#CreatingPanoramas'
+          >
+            Google Street View Custom Panorama documentation
+          </a>
+        </li>
+        <li>
+          <a
+            target='_blank'
+            rel='noreferrer'
+            href='https://en.wikipedia.org/wiki/Equirectangular_projection'
+          >
+            Explanation of Equirectangular projection
+          </a>
+        </li>
+      </ul>
     </>
   );
 }

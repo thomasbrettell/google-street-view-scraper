@@ -31,3 +31,14 @@
     left: 0;
   }
 }
+
+.image-canvas-wrapper {
+  display: flex;
+  position: relative;
+
+  .saving {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+}
