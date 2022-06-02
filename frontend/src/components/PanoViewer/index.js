@@ -28,12 +28,14 @@ function Controls(props) {
   );
 }
 
-//todo
-//texture is flipped
 function Dome() {
   const texture = useLoader(THREE.TextureLoader, t);
+
+  //mesh or texture is flipped for some reason, flipping back
+  const scale = new THREE.Vector3(1, 1, 1);
+  scale.x *= -1;
   return (
-    <mesh>
+    <mesh scale={scale}>
       <sphereBufferGeometry attach='geometry' args={[500, 60, 40]} />
       <meshBasicMaterial
         attach='material'
