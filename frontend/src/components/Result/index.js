@@ -1,7 +1,7 @@
 import ImageCanvas from '../ImageCanvas';
 import SavingOverlay from '../SavingOverlay';
 import PanoViewer from '../PanoViewer';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styles from './styles.module.scss';
 import { getCoords } from '../../utils';
 import { getTile } from '../../utils';
@@ -72,6 +72,8 @@ const Result = ({ url, zoom }) => {
           cols={cols}
           ref={sketchRef}
           setSketchImage={setSketchImage}
+          //new key will completely reset the component, bad practise?
+          key={url}
         />
         {saving && <SavingOverlay />}
       </div>

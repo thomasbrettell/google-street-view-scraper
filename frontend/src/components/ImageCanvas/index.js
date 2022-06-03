@@ -57,21 +57,21 @@ const ImageCanvas = forwardRef(({ tiles, rows, cols, setSketchImage }, ref) => {
           });
       }, 100);
     };
-  };
 
-  const draw = (p5) => {
-    p5.tiles.forEach(({ x, y, img }) => {
-      p5.image(
-        img,
-        p5.tileWidth * x,
-        p5.tileWidth * y,
-        p5.tileWidth,
-        p5.tileWidth
-      );
-    });
-    p5.noLoop();
-    //DONT REMOVE THE ^noLoop^ WITHOUT REMOVING THE vSTATE SETTERv BELOW
-    setSketchImage(p5.canvas.canvas.toDataURL('image/jpeg'));
+    p5.drawOnce = () => {
+      p5.tiles.forEach(({ x, y, img }) => {
+        p5.image(
+          img,
+          p5.tileWidth * x,
+          p5.tileWidth * y,
+          p5.tileWidth,
+          p5.tileWidth
+        );
+      });
+      setSketchImage(p5.canvas.canvas.toDataURL('image/jpeg'));
+    };
+
+    p5.drawOnce();
   };
 
   const windowResized = (p5) => {
@@ -86,7 +86,7 @@ const ImageCanvas = forwardRef(({ tiles, rows, cols, setSketchImage }, ref) => {
       className={styles['image-canvas']}
       preload={preload}
       setup={setup}
-      draw={draw}
+      // draw={draw}
       windowResized={windowResized}
       style={{
         paddingBottom: `${(rows / cols) * 100}%`,
