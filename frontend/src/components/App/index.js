@@ -2,17 +2,23 @@ import { useRef, useState } from 'react';
 import styles from './App.module.scss';
 import { getCoords } from '../../utils';
 import { getTile } from '../../utils';
-import { zoomDimensions, defaultZoomLevel, tileSize } from '../../constants';
+import {
+  zoomDimensions,
+  defaultZoomLevel,
+  tileSize,
+  defaultUrl,
+} from '../../constants';
 import ImageCanvas from '../ImageCanvas';
 import Divider from '../Divider';
 import SavingOverlay from '../SavingOverlay';
 import PanoViewer from '../PanoViewer';
+import Form from '../Form';
 
 const { cols, rows } = zoomDimensions[defaultZoomLevel];
 const coords = getCoords(cols, rows);
 
 const tiles = coords.map((coord) => {
-  coord.url = getTile(coord.x, coord.y, defaultZoomLevel);
+  coord.url = getTile(defaultUrl, coord.x, coord.y, defaultZoomLevel);
   return coord;
 });
 
@@ -44,6 +50,7 @@ function App() {
 
   return (
     <>
+      <Form />
       <h2>Tile Images</h2>
       <div
         className={styles.grid}

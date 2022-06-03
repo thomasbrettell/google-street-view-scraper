@@ -23,6 +23,9 @@ export const zoomDimensions = {
 
 export const defaultZoomLevel = 3;
 
+export const defaultUrl =
+  'https://streetviewpixels-pa.googleapis.com/v1/tile?cb_client=maps_sv.tactile&panoid=dbizASK4ARu3rwKMmZeDQw&x=x0&y=0&zoom=3&nbt=1&fover=2';
+
 export const tileSize = 512;
 
 export const serverUrl = 'http://localhost:3001/';

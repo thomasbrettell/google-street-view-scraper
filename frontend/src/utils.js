@@ -32,18 +32,10 @@ function replaceUrlParam(url, paramName, paramValue) {
 // return `https://streetviewpixels-pa.googleapis.com/v1/tile?cb_client=maps_sv.tactile&panoid=dbizASK4ARu3rwKMmZeDQw&x=${x}&y=${y}&zoom=${z}&nbt=1&fover=2`;
 // return `https://streetviewpixels-pa.googleapis.com/v1/tile?cb_client=maps_sv.tactile&panoid=dbizASK4ARu3rwKMmZeDQw&x=${x}&y=${y}&zoom=${z}&nbt=1&fover=2`;
 
-export const getTile = (x, y, z) => {
+export const getTile = (url, x, y, z) => {
   //this a bit janky
   return replaceUrlParam(
-    replaceUrlParam(
-      replaceUrlParam(
-        'https://streetviewpixels-pa.googleapis.com/v1/tile?cb_client=maps_sv.tactile&panoid=dbizASK4ARu3rwKMmZeDQw&x=0&y=0&zoom=0&nbt=1&fover=2',
-        'x',
-        x
-      ),
-      'y',
-      y
-    ),
+    replaceUrlParam(replaceUrlParam(url, 'x', x), 'y', y),
     'zoom',
     z
   );

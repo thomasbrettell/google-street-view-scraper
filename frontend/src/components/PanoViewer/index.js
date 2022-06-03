@@ -42,7 +42,6 @@ function Dome({ texture }) {
 }
 
 const PanoViewer = ({ projection }) => {
-  console.log(projection);
   const [interactedWithCanvas, setInteractedWithCanvas] = useState(false);
   return (
     <div

@@ -1,0 +1,17 @@
+.form {
+  display: inline-flex;
+  flex-direction: column;
+
+  button {
+    margin-top: 10px;
+  }
+}
+
+.input {
+  display: inline-flex;
+  flex-direction: column;
+
+  + .input {
+    margin-top: 10px;
+  }
+}
