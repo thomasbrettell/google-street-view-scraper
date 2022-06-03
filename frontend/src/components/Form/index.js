@@ -2,11 +2,20 @@ import styles from './styles.module.scss';
 import { defaultZoomLevel, defaultUrl } from '../../constants';
 import { useState } from 'react';
 
-const Form = () => {
+const Form = ({ setResult }) => {
   const [url, setUrl] = useState(defaultUrl);
   const [zoom, setZoom] = useState(defaultZoomLevel);
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    setResult({
+      url,
+      zoom,
+    });
+  };
+
   return (
-    <form className={styles.form}>
+    <form className={styles.form} onSubmit={submitHandler}>
       <div className={styles.input}>
         <label>URL</label>
         <input
@@ -16,9 +25,7 @@ const Form = () => {
         />
       </div>
       <div className={styles.input}>
-        <label>
-          Zoom Level [{zoom}]
-        </label>
+        <label>Zoom Level [{zoom}]</label>
         <input
           type='range'
           min='1'
